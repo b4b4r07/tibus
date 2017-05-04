@@ -1,0 +1,11 @@
+{# app/Resources/views/chiibus/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>chiibus</h1>
+    <ul id="navigation">
+        {% for anchor in anchors %}
+            <li><a href="{{ anchor.link }}">{{ anchor.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

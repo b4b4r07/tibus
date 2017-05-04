@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Goutte\Client;
 
-class CrawlController extends Controller
+class ChiibusController extends Controller
 {
     const CHIIBUS_URL = 'http://www.buskuru.com/chiibus/pc/route.php';
 
@@ -20,14 +20,25 @@ class CrawlController extends Controller
         $client = new Client();
         $crawler = $client->request('GET', self::CHIIBUS_URL);
         $anchors = $crawler->filter('span.font_wb > a')->each(function($anchor) {
-            return $anchor->text();
+            return [
+                'name' => $anchor->text(),
+                'link' => $anchor->attr('href'),
+            ];
         });
-        $text = implode("<br>", $anchors);
+        // $text = "";
+        // foreach($anchors as $anchor) {
+        //     $text .= sprintf("<a href=\"%s\">%s</a><br>\n", $anchor['link'], $anchor['name']);
+        // }
         // return new JsonResponse(
         //     $anchors
         // );
-        return new Response(
-            $text
+        // var_dump($text);
+        // return new Response(
+        //     $text
+        // );
+        return $this->render(
+            'chiibus/index.html.twig',
+            ['anchors' => $anchors]
         );
     }
 }
