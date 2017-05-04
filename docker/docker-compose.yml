@@ -1,0 +1,15 @@
+version: '2'
+services:
+  mysql:
+    build: ./mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../var/db:/var/lib/mysql
+
+  webserver:
+    build: ./webserver
+    ports:
+      - "8080:80"
+    volumes:
+      - ../:/var/www

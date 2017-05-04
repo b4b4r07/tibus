@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+
+# Apache gets grumpy about PID files pre-existing
+rm -f /usr/local/apache2/logs/httpd.pid
+
+# symfony stuff
+ln -snf /tmp/var/www/var/cache /var/www/var/cache
+ln -snf /tmp/var/www/var/logs /var/www/var/logs
+
+chown apache:apache /var/www/var/cache
+chown apache:apache /var/www/var/logs
+
+chmod 777 /var/www/var/cache
+chmod 777 /var/www/var/logs
+
+exec httpd -DFOREGROUND
